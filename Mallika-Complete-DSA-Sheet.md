@@ -433,3 +433,300 @@ Combines: Striver's A2Z + Neetcode 150 + Codeforces Tricks + Interview/OA Questi
 | 96 | Stock with Cooldown | [LeetCode](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/) | Medium | State Machine DP | [ ] | |
 
 > 💡 **DP Steps:** 1) State 2) Recurrence 3) Base 4) Order | **Knapsack:** take/skip | **LIS O(nlogn):** maintain smallest tails array | **Interval:** dp[i][j] try all splits k | **Stock:** states = (day, holding, tx_left)
+
+## 3.9 Greedy
+
+| # | Problem | Link | Difficulty | Pattern | Status | Fav |
+|---|---------|------|------------|---------|--------|-----|
+| 97 | Jump Game | [LeetCode](https://leetcode.com/problems/jump-game/) | Medium | Track max reachable | [ ] | |
+| 98 | Jump Game II | [LeetCode](https://leetcode.com/problems/jump-game-ii/) | Medium | BFS-like levels | [ ] | |
+| 99 | Gas Station | [LeetCode](https://leetcode.com/problems/gas-station/) | Medium | Reset when tank < 0 | [ ] | |
+| 100 | Non-overlapping Intervals | [LeetCode](https://leetcode.com/problems/non-overlapping-intervals/) | Medium | Sort by end time | [ ] | |
+| 101 | Minimum Platforms | [GFG](https://www.geeksforgeeks.org/problems/minimum-platforms-1587115620/1) | Medium | Sort arrivals & departures | [ ] | |
+| 102 | Job Sequencing | [GFG](https://www.geeksforgeeks.org/problems/job-sequencing-problem-1587115620/1) | Medium | Sort by profit + greedy | [ ] | |
+| 103 | Fractional Knapsack | [GFG](https://www.geeksforgeeks.org/problems/fractional-knapsack-1587115620/1) | Medium | Sort by value/weight | [ ] | |
+| 104 | Minimum Coins | [GFG](https://www.geeksforgeeks.org/problems/number-of-coins1702/1) | Medium | Greedy if denominations allow | [ ] | |
+| 105 | Assign Cookies | [LeetCode](https://leetcode.com/problems/assign-cookies/) | Easy | Sort + two pointers | [ ] | |
+| 106 | Candy Distribution | [LeetCode](https://leetcode.com/problems/candy/) | Hard | Two passes L→R, R→L | [ ] | |
+| 107 | Min Arrows to Burst Balloons | [LeetCode](https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/) | Medium | Sort by end, greedy | [ ] | |
+
+> 💡 **Greedy works when:** local optimal → global optimal | **Intervals:** sort by END for max non-overlap | If greedy fails → try DP
+
+## 3.10 Union-Find
+
+| # | Problem | Link | Difficulty | Pattern | Status | Fav |
+|---|---------|------|------------|---------|--------|-----|
+| 108 | Connected Components | [LeetCode](https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/) | Medium | Basic UF | [ ] | |
+| 109 | Redundant Connection | [LeetCode](https://leetcode.com/problems/redundant-connection/) | Medium | UF detect cycle | [ ] | |
+| 110 | Accounts Merge | [LeetCode](https://leetcode.com/problems/accounts-merge/) | Medium | UF + mapping | [ ] | |
+| 111 | Number of Islands II | [LeetCode](https://leetcode.com/problems/number-of-islands-ii/) | Hard | Dynamic UF | [ ] | |
+| 112 | Most Stones Removed | [LeetCode](https://leetcode.com/problems/most-stones-removed-with-same-row-or-column/) | Medium | Union by row/col | [ ] | |
+| 113 | Making A Large Island | [LeetCode](https://leetcode.com/problems/making-a-large-island/) | Hard | UF + flip one cell | [ ] | |
+
+## 3.11 Phase 3 Interview Favorites 🏢🔥
+
+| # | Problem | Link | Company | Pattern | Status |
+|---|---------|------|---------|---------|--------|
+| 114 | Binary Tree Max Path Sum | [LC](https://leetcode.com/problems/binary-tree-maximum-path-sum/) | Google, FB | DFS | [ ] |
+| 115 | Serialize/Deserialize BT | [LC](https://leetcode.com/problems/serialize-and-deserialize-binary-tree/) | Amazon, Google | BFS/DFS | [ ] |
+| 116 | Find Median from Data Stream | [LC](https://leetcode.com/problems/find-median-from-data-stream/) | Amazon, Google | Two Heaps | [ ] |
+| 117 | Word Ladder | [LC](https://leetcode.com/problems/word-ladder/) | Amazon, Google | BFS | [ ] |
+| 118 | LIS O(nlogn) | [LC](https://leetcode.com/problems/longest-increasing-subsequence/) | Google, Amazon | DP + BS | [ ] |
+| 119 | Edit Distance | [LC](https://leetcode.com/problems/edit-distance/) | Google, Amazon | 2D DP | [ ] |
+| 120 | Burst Balloons | [LC](https://leetcode.com/problems/burst-balloons/) | Google | Interval DP | [ ] |
+
+---
+---
+
+# PHASE 4: PRO LEVEL — CP & TRICKY (Week 4+)
+
+## 4.1 Bit Manipulation
+
+| # | Problem | Link | Difficulty | Pattern | Status | Fav |
+|---|---------|------|------------|---------|--------|-----|
+| 1 | Single Number | [LeetCode](https://leetcode.com/problems/single-number/) | Easy | XOR all | [ ] | |
+| 2 | Single Number II (3 times) | [LeetCode](https://leetcode.com/problems/single-number-ii/) | Medium | Bit counting | [ ] | |
+| 3 | Single Number III (two unique) | [LeetCode](https://leetcode.com/problems/single-number-iii/) | Medium | XOR + rightmost bit split | [ ] | |
+| 4 | Number of 1 Bits | [LeetCode](https://leetcode.com/problems/number-of-1-bits/) | Easy | n & (n-1) | [ ] | |
+| 5 | Counting Bits | [LeetCode](https://leetcode.com/problems/counting-bits/) | Easy | DP with bit relation | [ ] | |
+| 6 | Reverse Bits | [LeetCode](https://leetcode.com/problems/reverse-bits/) | Easy | Bit shifting | [ ] | |
+| 7 | Power of Two | [LeetCode](https://leetcode.com/problems/power-of-two/) | Easy | n & (n-1) == 0 | [ ] | |
+| 8 | Subsets using Bitmask | [LeetCode](https://leetcode.com/problems/subsets/) | Medium | 0 to 2^n - 1 | [ ] | |
+| 9 | Maximum XOR of Two Numbers | [LeetCode](https://leetcode.com/problems/maximum-xor-of-two-numbers-in-an-array/) | Medium | Bit Trie | [ ] | |
+| 10 | XOR Queries of Subarray | [LeetCode](https://leetcode.com/problems/xor-queries-of-a-subarray/) | Medium | Prefix XOR | [ ] | |
+| 11 | Min Flips to Make a OR b = c | [LeetCode](https://leetcode.com/problems/minimum-flips-to-make-a-or-b-equal-to-c/) | Medium | Bit-by-bit | [ ] | |
+| 12 | XOR of Numbers in Range | [GFG](https://www.geeksforgeeks.org/problems/find-xor-of-numbers-from-l-to-r/1) | Medium | XOR repeats every 4 | [ ] | |
+
+> 💡 **XOR:** a^a=0, a^0=a | **n&(n-1):** removes lowest set bit | **Get bit i:** (n>>i)&1 | **Two unique:** XOR all→a^b, split by rightmost set bit
+
+## 4.2 Math & Number Theory
+
+| # | Problem | Link | Difficulty | Pattern | Status | Fav |
+|---|---------|------|------------|---------|--------|-----|
+| 13 | Count Primes (Sieve) | [LeetCode](https://leetcode.com/problems/count-primes/) | Medium | Sieve of Eratosthenes | [ ] | |
+| 14 | GCD / LCM | [GFG](https://www.geeksforgeeks.org/problems/gcd-of-two-numbers3459/1) | Easy | Euclidean algorithm | [ ] | |
+| 15 | Modular Exponentiation | [GFG](https://www.geeksforgeeks.org/problems/modular-exponentiation-for-large-numbers5537/1) | Medium | Binary exponentiation | [ ] | |
+| 16 | Pow(x, n) | [LeetCode](https://leetcode.com/problems/powx-n/) | Medium | Binary exponentiation | [ ] | |
+| 17 | Trailing Zeroes in Factorial | [LeetCode](https://leetcode.com/problems/factorial-trailing-zeroes/) | Medium | Count factors of 5 | [ ] | |
+| 18 | Happy Number | [LeetCode](https://leetcode.com/problems/happy-number/) | Easy | Floyd's cycle detection | [ ] | |
+| 19 | Excel Column Number | [LeetCode](https://leetcode.com/problems/excel-sheet-column-number/) | Easy | Base 26 | [ ] | |
+| 20 | Multiply Strings | [LeetCode](https://leetcode.com/problems/multiply-strings/) | Medium | Grade school multiply | [ ] | |
+| 21 | Catalan Number (Count BSTs) | [LeetCode](https://leetcode.com/problems/unique-binary-search-trees/) | Medium | Catalan formula | [ ] | |
+| 22 | nCr Modulo p | [GFG](https://www.geeksforgeeks.org/problems/ncr1019/1) | Medium | Fermat's theorem | [ ] | |
+| 23 | Count digits in N! | [GFG](https://www.geeksforgeeks.org/problems/count-digits-in-a-factorial3957/1) | Medium | Log sum | [ ] | |
+
+> 💡 **Sieve:** O(n log log n) | **Binary Exp:** a^n in O(log n) | **Fermat:** a^(-1) ≡ a^(p-2) mod p | **Catalan:** BSTs, parentheses, paths
+
+## 4.3 Codeforces-Style Tricky Problems 🔥🔥
+
+| # | Problem | Link | Rating | Key Trick | Status | Fav |
+|---|---------|------|--------|-----------|--------|-----|
+| 24 | Watermelon | [CF](https://codeforces.com/problemset/problem/4/A) | 800 | Edge case: n=2 | [ ] | |
+| 25 | Bit++ | [CF](https://codeforces.com/problemset/problem/282/A) | 800 | Simulation | [ ] | |
+| 26 | Beautiful Matrix | [CF](https://codeforces.com/problemset/problem/263/A) | 800 | Manhattan distance | [ ] | |
+| 27 | Nearly Lucky Number | [CF](https://codeforces.com/problemset/problem/110/A) | 800 | Count 4s and 7s | [ ] | |
+| 28 | Soldier and Bananas | [CF](https://codeforces.com/problemset/problem/546/A) | 800 | Arithmetic sum | [ ] | |
+| 29 | Maximum in Table | [CF](https://codeforces.com/problemset/problem/509/A) | 800 | Pascal's observation | [ ] | |
+| 30 | Even Odds | [CF](https://codeforces.com/problemset/problem/318/A) | 900 | Position calculation | [ ] | |
+| 31 | Integer Sequence Dividing | [CF](https://codeforces.com/problemset/problem/1102/A) | 900 | Sum + parity | [ ] | |
+| 32 | Vanya and Fence | [CF](https://codeforces.com/problemset/problem/677/A) | 800 | Greedy counting | [ ] | |
+| 33 | Divisibility Problem | [CF](https://codeforces.com/problemset/problem/1328/A) | 800 | Modular trick | [ ] | |
+| 34 | Yet Another Palindrome | [CF](https://codeforces.com/problemset/problem/1324/B) | 1100 | Duplicate with gap | [ ] | |
+| 35 | Ehab and Construction | [CF](https://codeforces.com/problemset/problem/1088/B) | 1100 | Constructive | [ ] | |
+| 36 | Make Product Equal One | [CF](https://codeforces.com/problemset/problem/1206/B) | 1200 | Sign counting | [ ] | |
+| 37 | Books | [CF](https://codeforces.com/problemset/problem/279/B) | 1400 | Two pointers | [ ] | |
+| 38 | Good Subarrays | [CF](https://codeforces.com/problemset/problem/1398/C) | 1600 | Prefix sum (a[i]-1) | [ ] | |
+| 39 | Pashmak and Flowers | [CF](https://codeforces.com/problemset/problem/459/B) | 1200 | Combinatorics | [ ] | |
+| 40 | Ilya and Queries | [CF](https://codeforces.com/problemset/problem/313/B) | 1100 | Prefix sums | [ ] | |
+| 41 | Longest Regular Bracket Seq | [CF](https://codeforces.com/problemset/problem/5/C) | 1900 | Stack + DP 🔥 | [ ] | |
+| 42 | Playlist | [CF](https://codeforces.com/problemset/problem/1140/C) | 1500 | Sort + Greedy | [ ] | |
+| 43 | Number of Ways | [CF](https://codeforces.com/problemset/problem/466/C) | 1700 | Prefix + suffix count | [ ] | |
+
+> 💡 **CP Tricks:** Check edge cases (n=0,1,2) | Parity arguments | Read constraints for complexity | Prefix sums for range queries | Constructive = think what answer must satisfy
+
+## 4.4 Advanced DP 🔥
+
+| # | Problem | Link | Difficulty | Pattern | Status | Fav |
+|---|---------|------|------------|---------|--------|-----|
+| 44 | Longest Increasing Path in Matrix | [LeetCode](https://leetcode.com/problems/longest-increasing-path-in-a-matrix/) | Hard | DFS + Memo | [ ] | |
+| 45 | Min Cost to Cut a Stick | [LeetCode](https://leetcode.com/problems/minimum-cost-to-cut-a-stick/) | Hard | Interval DP | [ ] | |
+| 46 | Cherry Pickup | [LeetCode](https://leetcode.com/problems/cherry-pickup/) | Hard | 3D DP (two paths) | [ ] | |
+| 47 | Cherry Pickup II | [LeetCode](https://leetcode.com/problems/cherry-pickup-ii/) | Hard | 3D DP (two robots) | [ ] | |
+| 48 | Min Insertion for Palindrome | [LeetCode](https://leetcode.com/problems/minimum-insertion-steps-to-make-a-string-palindrome/) | Hard | LCS with reverse | [ ] | |
+| 49 | Super Egg Drop | [LeetCode](https://leetcode.com/problems/super-egg-drop/) | Hard | DP + BS 🔥🔥 | [ ] | |
+| 50 | Frog Jump | [LeetCode](https://leetcode.com/problems/frog-jump/) | Hard | HashMap DP | [ ] | |
+| 51 | Russian Doll Envelopes | [LeetCode](https://leetcode.com/problems/russian-doll-envelopes/) | Hard | Sort + LIS | [ ] | |
+| 52 | Number of LIS | [LeetCode](https://leetcode.com/problems/number-of-longest-increasing-subsequence/) | Medium | LIS + count | [ ] | |
+| 53 | Strange Printer | [LeetCode](https://leetcode.com/problems/strange-printer/) | Hard | Interval DP | [ ] | |
+| 54 | Distinct Subsequences | [LeetCode](https://leetcode.com/problems/distinct-subsequences/) | Hard | 2D DP | [ ] | |
+| 55 | Shortest Common Supersequence | [LeetCode](https://leetcode.com/problems/shortest-common-supersequence/) | Hard | LCS + Reconstruct | [ ] | |
+
+## 4.5 Segment Trees & Advanced DS
+
+| # | Problem | Link | Difficulty | Pattern | Status | Fav |
+|---|---------|------|------------|---------|--------|-----|
+| 56 | Range Sum Query Mutable | [LeetCode](https://leetcode.com/problems/range-sum-query-mutable/) | Medium | Segment Tree / BIT | [ ] | |
+| 57 | Count Smaller After Self | [LeetCode](https://leetcode.com/problems/count-of-smaller-numbers-after-self/) | Hard | BIT / Merge Sort | [ ] | |
+| 58 | Count of Range Sum | [LeetCode](https://leetcode.com/problems/count-of-range-sum/) | Hard | Merge Sort / BIT | [ ] | |
+| 59 | Skyline Problem | [LeetCode](https://leetcode.com/problems/the-skyline-problem/) | Hard | Sweep + Max Heap | [ ] | |
+| 60 | My Calendar I/II/III | [LeetCode](https://leetcode.com/problems/my-calendar-i/) | Med-Hard | Sweep / Segment Tree | [ ] | |
+
+## 4.6 Advanced String Algorithms
+
+| # | Problem | Link | Difficulty | Pattern | Status | Fav |
+|---|---------|------|------------|---------|--------|-----|
+| 61 | KMP Pattern Matching | [GFG](https://www.geeksforgeeks.org/problems/search-pattern-rabin-karp-algorithm4012/1) | Medium | Failure function | [ ] | |
+| 62 | Longest Happy Prefix | [LeetCode](https://leetcode.com/problems/longest-happy-prefix/) | Hard | KMP LPS | [ ] | |
+| 63 | Shortest Palindrome | [LeetCode](https://leetcode.com/problems/shortest-palindrome/) | Hard | KMP on s+"#"+rev(s) | [ ] | |
+| 64 | Count Palindromic Subsequences | [LeetCode](https://leetcode.com/problems/count-different-palindromic-subsequences/) | Hard | Interval DP | [ ] | |
+| 65 | Minimum Window Subsequence | [LeetCode](https://leetcode.com/problems/minimum-window-subsequence/) | Hard | Two pointers / DP | [ ] | |
+
+---
+---
+
+# 🧠 PATTERN CHEAT SHEET
+
+## Pattern Identification Flowchart
+```
+Subarray/Substring? → Fixed size: Fixed Window | Variable: Sliding Window | Sum=K: Prefix+Map | Exactly K: atMost(K)-atMost(K-1)
+Pairs/Triplets? → Sorted: Two Pointers | Unsorted O(n): HashMap | All combos: Sort+TP
+Next/Prev Greater/Smaller? → Monotonic Stack
+Minimize max / Maximize min? → Binary Search on Answer
+Shortest path? → Unweighted: BFS | Weighted+: Dijkstra | Negative: Bellman-Ford | All pairs: Floyd
+Count ways / Optimal? → Overlapping subproblems: DP | Local=Global: Greedy
+Connectivity? → Static: DFS/BFS | Dynamic: Union-Find
+Trees? → Path: DFS return up | Level: BFS | BST: Inorder sorted
+Generate all? → Backtracking
+Intervals? → Merge: Sort by start | Max non-overlap: Sort by end | Range queries: Segment Tree
+```
+
+## Time Complexity Reference
+
+| Technique | Time | Use When |
+|-----------|------|----------|
+| Two Pointers | O(n) | Sorted, pair finding |
+| Sliding Window | O(n) | Subarray/substring constraint |
+| Binary Search | O(log n) | Sorted/monotonic |
+| BS on Answer | O(n log range) | Optimize min/max |
+| HashMap | O(n) | Counting, pairs |
+| Monotonic Stack | O(n) | Next/prev greater/smaller |
+| BFS/DFS | O(V+E) | Graph traversal |
+| Dijkstra | O(E log V) | Shortest path (positive) |
+| Union-Find | O(α(n))/op | Dynamic connectivity |
+| Segment Tree | O(log n) | Range queries + updates |
+| DP (1D) | O(n) or O(nk) | Sequence optimization |
+| DP (2D) | O(nm) | Two sequences |
+| Backtracking | O(2^n) or O(n!) | All possibilities |
+
+## Problem → Pattern Mapping
+
+| Keywords | Pattern |
+|----------|---------|
+| "Contiguous subarray" | Sliding Window / Prefix Sum |
+| "Sorted + target" | Binary Search / Two Pointers |
+| "Minimize maximum" | BS on Answer |
+| "Next greater" | Monotonic Stack |
+| "Top K / Kth" | Heap |
+| "Number of ways" | DP |
+| "All possible" | Backtracking |
+| "Connected components" | BFS/DFS / Union-Find |
+| "Shortest path" | BFS / Dijkstra |
+| "Level by level" | BFS |
+| "Tree path" | DFS return values |
+| "Intervals / Merge" | Sort + Sweep |
+| "Parentheses" | Stack |
+| "Subsequence" | DP (LIS/LCS) |
+| "Palindrome" | Expand center / DP |
+
+---
+---
+
+# 🏢 COMPANY-WISE QUESTIONS
+
+## Google 🔥 (BS on Answer, Greedy proofs, Graph, DP optimizations)
+
+| # | Problem | Link | Pattern | Freq | Status |
+|---|---------|------|---------|------|--------|
+| 1 | Median of Two Sorted Arrays | [LC](https://leetcode.com/problems/median-of-two-sorted-arrays/) | BS | ⭐⭐⭐ | [ ] |
+| 2 | Trapping Rain Water | [LC](https://leetcode.com/problems/trapping-rain-water/) | Two Pointers | ⭐⭐⭐ | [ ] |
+| 3 | Longest Increasing Path in Matrix | [LC](https://leetcode.com/problems/longest-increasing-path-in-a-matrix/) | DFS+Memo | ⭐⭐⭐ | [ ] |
+| 4 | Word Ladder | [LC](https://leetcode.com/problems/word-ladder/) | BFS | ⭐⭐⭐ | [ ] |
+| 5 | Split Array Largest Sum | [LC](https://leetcode.com/problems/split-array-largest-sum/) | BS Answer | ⭐⭐⭐ | [ ] |
+| 6 | Burst Balloons | [LC](https://leetcode.com/problems/burst-balloons/) | Interval DP | ⭐⭐ | [ ] |
+| 7 | Serialize/Deserialize BT | [LC](https://leetcode.com/problems/serialize-and-deserialize-binary-tree/) | Tree | ⭐⭐⭐ | [ ] |
+| 8 | Minimum Window Substring | [LC](https://leetcode.com/problems/minimum-window-substring/) | Sliding Window | ⭐⭐⭐ | [ ] |
+| 9 | Koko Eating Bananas | [LC](https://leetcode.com/problems/koko-eating-bananas/) | BS Answer | ⭐⭐⭐ | [ ] |
+| 10 | Snapshot Array | [LC](https://leetcode.com/problems/snapshot-array/) | Binary Search | ⭐⭐⭐ | [ ] |
+
+## Amazon 🔥 (HashMap, Priority Queues, BFS/DFS grids, Sliding Window)
+
+| # | Problem | Link | Pattern | Freq | Status |
+|---|---------|------|---------|------|--------|
+| 1 | LRU Cache | [LC](https://leetcode.com/problems/lru-cache/) | HashMap+DLL | ⭐⭐⭐ | [ ] |
+| 2 | Number of Islands | [LC](https://leetcode.com/problems/number-of-islands/) | BFS/DFS | ⭐⭐⭐ | [ ] |
+| 3 | Merge Intervals | [LC](https://leetcode.com/problems/merge-intervals/) | Sort+Merge | ⭐⭐⭐ | [ ] |
+| 4 | Two Sum | [LC](https://leetcode.com/problems/two-sum/) | HashMap | ⭐⭐⭐ | [ ] |
+| 5 | Top K Frequent Elements | [LC](https://leetcode.com/problems/top-k-frequent-elements/) | Heap | ⭐⭐⭐ | [ ] |
+| 6 | Rotting Oranges | [LC](https://leetcode.com/problems/rotting-oranges/) | Multi-BFS | ⭐⭐⭐ | [ ] |
+| 7 | K Closest Points | [LC](https://leetcode.com/problems/k-closest-points-to-origin/) | Heap | ⭐⭐⭐ | [ ] |
+| 8 | Meeting Rooms II | [LC](https://leetcode.com/problems/meeting-rooms-ii/) | Heap/Sweep | ⭐⭐⭐ | [ ] |
+| 9 | Word Break | [LC](https://leetcode.com/problems/word-break/) | DP | ⭐⭐⭐ | [ ] |
+| 10 | Copy List with Random Pointer | [LC](https://leetcode.com/problems/copy-list-with-random-pointer/) | HashMap | ⭐⭐⭐ | [ ] |
+
+## Microsoft (Strings, Trees, DP, Matrix)
+
+| # | Problem | Link | Pattern | Freq | Status |
+|---|---------|------|---------|------|--------|
+| 1 | Add Two Numbers | [LC](https://leetcode.com/problems/add-two-numbers/) | Linked List | ⭐⭐⭐ | [ ] |
+| 2 | Longest Substring No Repeat | [LC](https://leetcode.com/problems/longest-substring-without-repeating-characters/) | Sliding Window | ⭐⭐⭐ | [ ] |
+| 3 | Group Anagrams | [LC](https://leetcode.com/problems/group-anagrams/) | HashMap | ⭐⭐⭐ | [ ] |
+| 4 | Validate BST | [LC](https://leetcode.com/problems/validate-binary-search-tree/) | DFS+Range | ⭐⭐⭐ | [ ] |
+| 5 | LCA of Binary Tree | [LC](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/) | DFS | ⭐⭐⭐ | [ ] |
+
+## DE Shaw / Quant (Math, CP-style, Observations)
+
+| # | Problem | Link | Pattern | Status |
+|---|---------|------|---------|--------|
+| 1 | Super Egg Drop | [LC](https://leetcode.com/problems/super-egg-drop/) | DP+BS | [ ] |
+| 2 | Maximum XOR of Two Numbers | [LC](https://leetcode.com/problems/maximum-xor-of-two-numbers-in-an-array/) | Bit Trie | [ ] |
+| 3 | Russian Doll Envelopes | [LC](https://leetcode.com/problems/russian-doll-envelopes/) | Sort+LIS | [ ] |
+| 4 | Skyline Problem | [LC](https://leetcode.com/problems/the-skyline-problem/) | Sweep+Heap | [ ] |
+| 5 | Regular Expression Matching | [LC](https://leetcode.com/problems/regular-expression-matching/) | 2D DP | [ ] |
+
+---
+
+## 🔥 OA Tips
+```
+1. Read ALL problems first — start easiest
+2. Brute force FIRST for partial marks
+3. Edge cases: empty, single element, overflow, k=0, negatives
+4. Time management: max 20 min per problem
+5. Common traps: integer overflow, off-by-one in BS, forgetting to sort, disconnected graph
+```
+
+## 📊 Priority Order (Your Profile: MNNIT → Amazon → Google-level)
+```
+HIGH: BS on Answer, Sliding Window, Graph BFS/DFS, DP (Knapsack/LIS/LCS), Monotonic Stack, Two Pointers
+MED: Heaps, Backtracking, Greedy, Trees, Union-Find
+DAILY: 2 Codeforces problems + Edge case practice + Speed coding
+```
+
+---
+
+## 🔥 CP Quick Tricks Reference
+```
+1. Binary Search on Answer: "Minimize the maximum" / "Maximize the minimum"
+2. Contribution Technique: Count how many subarrays each element contributes to
+3. Prefix Sum/XOR: O(1) range queries after O(n) preprocess
+4. Monotonic Stack: Next Greater/Smaller in O(n)
+5. "Exactly K" = atMost(K) - atMost(K-1)
+6. Meet in the Middle: Split in half when n ≤ 40
+7. Bitmask DP: When n ≤ 20
+8. Line Sweep: Interval problems, event processing
+9. Coordinate Compression: Map large values to small indices
+10. Matrix Exponentiation: Linear recurrences in O(log n)
+```
+
+---
+**Created by Mallika | MNNIT Allahabad | Amazon SDE Intern**
+**Sources: Striver's A2Z + Neetcode 150 + Codeforces + LeetCode Premium**
