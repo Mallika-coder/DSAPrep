@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mallika's DSA Sheet</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #0f0f23;
+            --card: #1a1a2e;
+            --accent: #6c63ff;
+            --accent2: #ff6584;
+            --text: #e0e0e0;
+            --muted: #8892b0;
+            --success: #64ffda;
+            --border: #233554;
+        }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 16px;
+            margin-bottom: 30px;
+            border: 1px solid var(--border);
+        }
+        .header h1 { font-size: 2.5rem; margin-bottom: 8px; }
+        .header h1 span { color: var(--accent); }
+        .header p { color: var(--muted); font-size: 1.1rem; }
+
+        /* Stats Bar */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+        .stat-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+        .stat-card .number { font-size: 2rem; font-weight: 700; color: var(--accent); }
+        .stat-card .label { color: var(--muted); font-size: 0.85rem; margin-top: 4px; }
+        .progress-bar-bg {
+            width: 100%;
+            height: 8px;
+            background: var(--border);
+            border-radius: 4px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--success));
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        /* Navigation Tabs */
+        .tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            background: var(--card);
+            padding: 8px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+        .tab {
+            padding: 10px 20px;
+            border: none;
+            background: transparent;
+            color: var(--muted);
+            cursor: pointer;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .tab:hover { background: rgba(108,99,255,0.1); color: var(--text); }
+        .tab.active { background: var(--accent); color: #fff; }
+
+        /* Search & Filters */
+        .controls {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .search-box {
+            flex: 1;
+            min-width: 200px;
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--card);
+            color: var(--text);
+            font-size: 0.95rem;
+        }
+        .search-box:focus { outline: none; border-color: var(--accent); }
+        .filter-btn {
+            padding: 10px 16px;
+            border: 1px solid var(--border);
+            background: var(--card);
+            color: var(--muted);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+        .filter-btn:hover, .filter-btn.active { border-color: var(--accent); color: var(--accent); }
+
+        /* Problem Table */
+        .section { margin-bottom: 30px; }
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px 12px 0 0;
+            cursor: pointer;
+        }
+        .section-header h3 { font-size: 1.1rem; }
+        .section-header .badge {
+            background: var(--accent);
+            color: #fff;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+        }
+        .section-body {
+            border: 1px solid var(--border);
+            border-top: none;
+            border-radius: 0 0 12px 12px;
+            overflow: hidden;
+        }
+        .problem-row {
+            display: grid;
+            grid-template-columns: 40px 1fr 90px 180px 50px 50px;
+            align-items: center;
+            padding: 12px 20px;
+            border-bottom: 1px solid var(--border);
+            transition: background 0.15s;
+        }
+        .problem-row:hover { background: rgba(108,99,255,0.05); }
+        .problem-row:last-child { border-bottom: none; }
+        .problem-row .num { color: var(--muted); font-size: 0.85rem; }
+        .problem-row .name a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .problem-row .name a:hover { color: var(--accent); text-decoration: underline; }
+        .problem-row .diff {
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-align: center;
+        }
+        .diff-easy { background: rgba(100,255,218,0.15); color: var(--success); }
+        .diff-medium { background: rgba(255,200,50,0.15); color: #ffc832; }
+        .diff-hard { background: rgba(255,101,132,0.15); color: var(--accent2); }
+        .problem-row .pattern {
+            color: var(--muted);
+            font-size: 0.8rem;
+            background: rgba(108,99,255,0.1);
+            padding: 3px 8px;
+            border-radius: 6px;
+            display: inline-block;
+        }
+        .check-btn {
+            width: 24px; height: 24px;
+            border: 2px solid var(--border);
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.2s;
+            background: transparent;
+            color: transparent;
+        }
+        .check-btn.checked { background: var(--success); border-color: var(--success); color: var(--bg); }
+        .fav-btn {
+            background: none; border: none;
+            cursor: pointer; font-size: 1.1rem;
+            opacity: 0.3; transition: opacity 0.2s;
+        }
+        .fav-btn.active { opacity: 1; }
+
+        /* Insight Box */
+        .insight-box {
+            margin: 12px 20px 16px;
+            padding: 12px 16px;
+            background: rgba(108,99,255,0.08);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 8px 8px 0;
+            font-size: 0.85rem;
+            color: var(--muted);
+        }
+        .insight-box strong { color: var(--text); }
+
+        /* How To Follow Tab */
+        .guide-content {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 30px;
+        }
+        .guide-content h2 { color: var(--accent); margin: 24px 0 12px; font-size: 1.3rem; }
+        .guide-content h2:first-child { margin-top: 0; }
+        .guide-content p { margin-bottom: 12px; color: var(--muted); }
+        .guide-content ul, .guide-content ol { margin: 12px 0 12px 24px; color: var(--muted); }
+        .guide-content li { margin-bottom: 6px; }
+        .guide-content code {
+            background: rgba(108,99,255,0.15);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            color: var(--success);
+        }
+        .guide-content .tip-box {
+            background: rgba(100,255,218,0.08);
+            border: 1px solid rgba(100,255,218,0.2);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+        }
+        .guide-content table { width: 100%; border-collapse: collapse; margin: 12px 0; }
+        .guide-content th, .guide-content td {
+            padding: 10px 14px; text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        .guide-content th { color: var(--accent); font-size: 0.85rem; }
+
+        /* Cheat Sheet Tab */
+        .cheat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 16px; }
+        .cheat-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+        }
+        .cheat-card h4 { color: var(--accent); margin-bottom: 10px; }
+        .cheat-card pre {
+            background: var(--bg);
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            overflow-x: auto;
+            color: var(--success);
+        }
+
+        /* Tab content visibility */
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .problem-row { grid-template-columns: 30px 1fr 70px 50px 40px; font-size: 0.85rem; }
+            .problem-row .pattern { display: none; }
+            .header h1 { font-size: 1.8rem; }
+            .stats-bar { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>🚀 <span>Mallika's</span> Ultimate DSA Sheet</h1>
+        <p>350 Problems | 4 Phases | Pattern Recognition | Interview Ready</p>
+    </div>
+
+    <div class="stats-bar">
+        <div class="stat-card">
+            <div class="number" id="total-solved">0</div>
+            <div class="label">Problems Solved</div>
+            <div class="progress-bar-bg"><div class="progress-bar-fill" id="progress-fill" style="width: 0%"></div></div>
+        </div>
+        <div class="stat-card">
+            <div class="number" id="total-problems">350</div>
+            <div class="label">Total Problems</div>
+        </div>
+        <div class="stat-card">
+            <div class="number" id="fav-count">0</div>
+            <div class="label">⭐ Favorites</div>
+        </div>
+        <div class="stat-card">
+            <div class="number" id="streak">0</div>
+            <div class="label">🔥 Day Streak</div>
+        </div>
+    </div>
+
+    <div class="tabs">
+        <button class="tab active" data-tab="phase1">Phase 1</button>
+        <button class="tab" data-tab="phase2">Phase 2</button>
+        <button class="tab" data-tab="phase3">Phase 3</button>
+        <button class="tab" data-tab="phase4">Phase 4</button>
+        <button class="tab" data-tab="company">🏢 Company</button>
+        <button class="tab" data-tab="cheatsheet">🧠 Cheat Sheet</button>
+        <button class="tab" data-tab="guide">📖 How to Follow</button>
+    </div>
+
+    <div class="controls">
+        <input type="text" class="search-box" id="search" placeholder="🔍 Search problems, patterns, companies...">
+        <button class="filter-btn" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="pending">Pending</button>
+        <button class="filter-btn" data-filter="completed">Completed</button>
+        <button class="filter-btn" data-filter="favorite">⭐ Favorites</button>
+    </div>
+
+    <!-- Phase 1 -->
+    <div class="tab-content active" id="phase1"></div>
+    <!-- Phase 2 -->
+    <div class="tab-content" id="phase2"></div>
+    <!-- Phase 3 -->
+    <div class="tab-content" id="phase3"></div>
+    <!-- Phase 4 -->
+    <div class="tab-content" id="phase4"></div>
+    <!-- Company -->
+    <div class="tab-content" id="company"></div>
+    <!-- Cheat Sheet -->
+    <div class="tab-content" id="cheatsheet"></div>
+    <!-- Guide -->
+    <div class="tab-content" id="guide"></div>
+</div>
+
+<script>
+// ====== PROBLEM DATA ======
+const problems = {
+phase1: [
+  { section: "1.1 Arrays — Basics", problems: [
+    { id: "p1-1", name: "Two Sum", link: "https://leetcode.com/problems/two-sum/", diff: "Easy", pattern: "HashMap" },
+    { id: "p1-2", name: "Best Time to Buy and Sell Stock", link: "https://leetcode.com/problems/best-time-to-buy-and-sell-stock/", diff: "Easy", pattern: "Kadane's variant" },
+    { id: "p1-3", name: "Contains Duplicate", link: "https://leetcode.com/problems/contains-duplicate/", diff: "Easy", pattern: "HashSet" },
+    { id: "p1-4", name: "Maximum Subarray (Kadane's)", link: "https://leetcode.com/problems/maximum-subarray/", diff: "Medium", pattern: "Kadane's" },
+    { id: "p1-5", name: "Product of Array Except Self", link: "https://leetcode.com/problems/product-of-array-except-self/", diff: "Medium", pattern: "Prefix/Suffix" },
+    { id: "p1-6", name: "Maximum Product Subarray", link: "https://leetcode.com/problems/maximum-product-subarray/", diff: "Medium", pattern: "Track min & max" },
+    { id: "p1-7", name: "Find Min in Rotated Sorted Array", link: "https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/", diff: "Medium", pattern: "Binary Search" },
+    { id: "p1-8", name: "Search in Rotated Sorted Array", link: "https://leetcode.com/problems/search-in-rotated-sorted-array/", diff: "Medium", pattern: "Modified BS" },
+    { id: "p1-9", name: "Container With Most Water", link: "https://leetcode.com/problems/container-with-most-water/", diff: "Medium", pattern: "Two Pointers" },
+    { id: "p1-10", name: "3Sum", link: "https://leetcode.com/problems/3sum/", diff: "Medium", pattern: "Sort + Two Pointers" },
+  ], insight: "Two Sum: HashMap complement O(n) | Kadane's: Reset if negative | Rotated: Find sorted half | 3Sum: Fix one + two pointers" },
+  { section: "1.2 Arrays — Tricky 🔥", problems: [
+    { id: "p1-11", name: "Next Permutation", link: "https://leetcode.com/problems/next-permutation/", diff: "Medium", pattern: "Observation" },
+    { id: "p1-12", name: "Set Matrix Zeroes", link: "https://leetcode.com/problems/set-matrix-zeroes/", diff: "Medium", pattern: "In-place marking" },
+    { id: "p1-13", name: "Rotate Image", link: "https://leetcode.com/problems/rotate-image/", diff: "Medium", pattern: "Transpose+Reverse" },
+    { id: "p1-14", name: "Spiral Matrix", link: "https://leetcode.com/problems/spiral-matrix/", diff: "Medium", pattern: "Boundary sim" },
+    { id: "p1-15", name: "Merge Intervals", link: "https://leetcode.com/problems/merge-intervals/", diff: "Medium", pattern: "Sort by start" },
+    { id: "p1-16", name: "Subarray Sum Equals K", link: "https://leetcode.com/problems/subarray-sum-equals-k/", diff: "Medium", pattern: "Prefix Sum+Map" },
+    { id: "p1-17", name: "Trapping Rain Water", link: "https://leetcode.com/problems/trapping-rain-water/", diff: "Hard", pattern: "Two Pointers" },
+    { id: "p1-18", name: "First Missing Positive", link: "https://leetcode.com/problems/first-missing-positive/", diff: "Hard", pattern: "Cyclic Sort" },
+    { id: "p1-19", name: "Longest Consecutive Sequence", link: "https://leetcode.com/problems/longest-consecutive-sequence/", diff: "Medium", pattern: "HashSet+chain" },
+    { id: "p1-20", name: "Majority Element", link: "https://leetcode.com/problems/majority-element/", diff: "Easy", pattern: "Boyer-Moore" },
+  ], insight: "Trapping Rain: min(leftMax,rightMax)-h[i] | Subarray Sum=K: prefix map | First Missing Positive: cyclic sort | Next Perm: find first decreasing from right" },
+  { section: "1.3 Strings", problems: [
+    { id: "p1-21", name: "Longest Substring Without Repeating", link: "https://leetcode.com/problems/longest-substring-without-repeating-characters/", diff: "Medium", pattern: "Sliding Window" },
+    { id: "p1-22", name: "Longest Palindromic Substring", link: "https://leetcode.com/problems/longest-palindromic-substring/", diff: "Medium", pattern: "Expand center" },
+    { id: "p1-23", name: "Group Anagrams", link: "https://leetcode.com/problems/group-anagrams/", diff: "Medium", pattern: "Sorted key" },
+    { id: "p1-24", name: "Minimum Window Substring", link: "https://leetcode.com/problems/minimum-window-substring/", diff: "Hard", pattern: "Sliding Window" },
+    { id: "p1-25", name: "Longest Repeating Char Replacement", link: "https://leetcode.com/problems/longest-repeating-character-replacement/", diff: "Medium", pattern: "Sliding Window" },
+    { id: "p1-26", name: "Valid Anagram", link: "https://leetcode.com/problems/valid-anagram/", diff: "Easy", pattern: "Frequency count" },
+    { id: "p1-27", name: "Valid Palindrome", link: "https://leetcode.com/problems/valid-palindrome/", diff: "Easy", pattern: "Two Pointers" },
+    { id: "p1-28", name: "KMP Pattern Matching", link: "https://www.geeksforgeeks.org/problems/search-pattern-rabin-karp-algorithm4012/1", diff: "Medium", pattern: "KMP/Rolling Hash" },
+  ], insight: "Min Window: shrink when all found | Repeating Replacement: window valid when (len-maxFreq)<=k | KMP: build LPS array" },
+  { section: "1.4 Sorting", problems: [
+    { id: "p1-29", name: "Sort Colors (Dutch National Flag)", link: "https://leetcode.com/problems/sort-colors/", diff: "Medium", pattern: "Three pointers" },
+    { id: "p1-30", name: "Kth Largest Element", link: "https://leetcode.com/problems/kth-largest-element-in-an-array/", diff: "Medium", pattern: "QuickSelect/Heap" },
+    { id: "p1-31", name: "Top K Frequent Elements", link: "https://leetcode.com/problems/top-k-frequent-elements/", diff: "Medium", pattern: "Bucket Sort" },
+    { id: "p1-32", name: "Count Inversions", link: "https://www.geeksforgeeks.org/problems/inversion-of-array-1587115620/1", diff: "Hard", pattern: "Merge Sort mod" },
+    { id: "p1-33", name: "Largest Number", link: "https://leetcode.com/problems/largest-number/", diff: "Medium", pattern: "Custom comparator" },
+  ], insight: "DNF: 3 pointers (lo,mid,hi) | QuickSelect: O(n) avg | Count Inversions: merge step | Largest Number: compare a+b vs b+a" },
+  { section: "1.5 Binary Search 🔥", problems: [
+    { id: "p1-34", name: "Binary Search", link: "https://leetcode.com/problems/binary-search/", diff: "Easy", pattern: "Standard BS" },
+    { id: "p1-35", name: "Find First and Last Position", link: "https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/", diff: "Medium", pattern: "Two BS" },
+    { id: "p1-36", name: "Find Peak Element", link: "https://leetcode.com/problems/find-peak-element/", diff: "Medium", pattern: "BS unsorted" },
+    { id: "p1-37", name: "Koko Eating Bananas", link: "https://leetcode.com/problems/koko-eating-bananas/", diff: "Medium", pattern: "BS on Answer 🔥" },
+    { id: "p1-38", name: "Capacity to Ship Packages", link: "https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/", diff: "Medium", pattern: "BS on Answer" },
+    { id: "p1-39", name: "Split Array Largest Sum", link: "https://leetcode.com/problems/split-array-largest-sum/", diff: "Hard", pattern: "BS on Answer" },
+    { id: "p1-40", name: "Aggressive Cows", link: "https://www.geeksforgeeks.org/problems/aggressive-cows/1", diff: "Hard", pattern: "BS on Answer" },
+    { id: "p1-41", name: "Median of Two Sorted Arrays", link: "https://leetcode.com/problems/median-of-two-sorted-arrays/", diff: "Hard", pattern: "BS on partition" },
+    { id: "p1-42", name: "Search in 2D Matrix", link: "https://leetcode.com/problems/search-a-2d-matrix/", diff: "Medium", pattern: "1D sorted" },
+    { id: "p1-43", name: "Allocate Minimum Pages", link: "https://www.geeksforgeeks.org/problems/allocate-minimum-number-of-pages0937/1", diff: "Hard", pattern: "BS on Answer" },
+  ], insight: "BS on Answer: lo=min,hi=max → while lo<hi: mid=(lo+hi)//2, if feasible: hi=mid else lo=mid+1 | Median: BS on smaller array" },
+],
+phase2: [
+  { section: "2.1 Two Pointers", problems: [
+    { id: "p2-1", name: "Two Sum II (Sorted)", link: "https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/", diff: "Medium", pattern: "Two Pointers" },
+    { id: "p2-2", name: "3Sum Closest", link: "https://leetcode.com/problems/3sum-closest/", diff: "Medium", pattern: "TP + Track best" },
+    { id: "p2-3", name: "Container With Most Water", link: "https://leetcode.com/problems/container-with-most-water/", diff: "Medium", pattern: "Shrink shorter" },
+    { id: "p2-4", name: "Trapping Rain Water", link: "https://leetcode.com/problems/trapping-rain-water/", diff: "Hard", pattern: "TP maxL/maxR" },
+    { id: "p2-5", name: "Remove Duplicates", link: "https://leetcode.com/problems/remove-duplicates-from-sorted-array/", diff: "Easy", pattern: "Slow-Fast" },
+    { id: "p2-6", name: "Boats to Save People", link: "https://leetcode.com/problems/boats-to-save-people/", diff: "Medium", pattern: "Sort+Greedy TP" },
+    { id: "p2-7", name: "Partition Labels", link: "https://leetcode.com/problems/partition-labels/", diff: "Medium", pattern: "Last occurrence" },
+  ], insight: "Sorted → two pointers from ends | In-place → slow=write, fast=read | Trapping Rain → leftMax, rightMax, process smaller side" },
+  { section: "2.2 Sliding Window", problems: [
+    { id: "p2-8", name: "Longest Substring No Repeat", link: "https://leetcode.com/problems/longest-substring-without-repeating-characters/", diff: "Medium", pattern: "Variable+Set" },
+    { id: "p2-9", name: "Minimum Window Substring", link: "https://leetcode.com/problems/minimum-window-substring/", diff: "Hard", pattern: "Variable+FreqMap" },
+    { id: "p2-10", name: "Sliding Window Maximum", link: "https://leetcode.com/problems/sliding-window-maximum/", diff: "Hard", pattern: "Monotonic Deque 🔥" },
+    { id: "p2-11", name: "Subarrays with K Different", link: "https://leetcode.com/problems/subarrays-with-k-different-integers/", diff: "Hard", pattern: "atMost(k)-atMost(k-1)" },
+    { id: "p2-12", name: "Max Consecutive Ones III", link: "https://leetcode.com/problems/max-consecutive-ones-iii/", diff: "Medium", pattern: "Window k flips" },
+    { id: "p2-13", name: "Permutation in String", link: "https://leetcode.com/problems/permutation-in-string/", diff: "Medium", pattern: "Fixed+freq" },
+    { id: "p2-14", name: "Fruit Into Baskets", link: "https://leetcode.com/problems/fruit-into-baskets/", diff: "Medium", pattern: "At most 2" },
+    { id: "p2-15", name: "Minimum Size Subarray Sum", link: "https://leetcode.com/problems/minimum-size-subarray-sum/", diff: "Medium", pattern: "Shrink sum>=target" },
+  ], insight: "Template: expand right → while invalid: shrink left → update answer | 'Exactly K' = atMost(K) - atMost(K-1)" },
+  { section: "2.3 Stack & Monotonic Stack 🔥", problems: [
+    { id: "p2-16", name: "Valid Parentheses", link: "https://leetcode.com/problems/valid-parentheses/", diff: "Easy", pattern: "Stack matching" },
+    { id: "p2-17", name: "Next Greater Element I", link: "https://leetcode.com/problems/next-greater-element-i/", diff: "Easy", pattern: "Monotonic Stack" },
+    { id: "p2-18", name: "Daily Temperatures", link: "https://leetcode.com/problems/daily-temperatures/", diff: "Medium", pattern: "Decreasing Stack" },
+    { id: "p2-19", name: "Largest Rectangle in Histogram", link: "https://leetcode.com/problems/largest-rectangle-in-histogram/", diff: "Hard", pattern: "Mono Stack 🔥🔥" },
+    { id: "p2-20", name: "Remove K Digits", link: "https://leetcode.com/problems/remove-k-digits/", diff: "Medium", pattern: "Increasing Stack" },
+    { id: "p2-21", name: "Sum of Subarray Minimums", link: "https://leetcode.com/problems/sum-of-subarray-minimums/", diff: "Medium", pattern: "Contribution" },
+    { id: "p2-22", name: "Min Stack", link: "https://leetcode.com/problems/min-stack/", diff: "Medium", pattern: "Auxiliary stack" },
+    { id: "p2-23", name: "Car Fleet", link: "https://leetcode.com/problems/car-fleet/", diff: "Medium", pattern: "Stack sort" },
+  ], insight: "Decreasing stack → next GREATER | Increasing → next SMALLER | Largest Rect: prev_smaller + next_smaller for each bar" },
+  { section: "2.4 Linked List", problems: [
+    { id: "p2-24", name: "Reverse Linked List", link: "https://leetcode.com/problems/reverse-linked-list/", diff: "Easy", pattern: "Iterative" },
+    { id: "p2-25", name: "Linked List Cycle II", link: "https://leetcode.com/problems/linked-list-cycle-ii/", diff: "Medium", pattern: "Floyd's" },
+    { id: "p2-26", name: "Merge K Sorted Lists", link: "https://leetcode.com/problems/merge-k-sorted-lists/", diff: "Hard", pattern: "Min Heap" },
+    { id: "p2-27", name: "Reorder List", link: "https://leetcode.com/problems/reorder-list/", diff: "Medium", pattern: "Mid+Reverse+Merge" },
+    { id: "p2-28", name: "LRU Cache", link: "https://leetcode.com/problems/lru-cache/", diff: "Medium", pattern: "HashMap+DLL 🔥" },
+    { id: "p2-29", name: "Copy List Random Pointer", link: "https://leetcode.com/problems/copy-list-with-random-pointer/", diff: "Medium", pattern: "HashMap" },
+    { id: "p2-30", name: "Sort List", link: "https://leetcode.com/problems/sort-list/", diff: "Medium", pattern: "Merge Sort LL" },
+  ], insight: "Floyd's: slow=1,fast=2 → reset one to head, both move 1 | LRU: HashMap+DLL O(1) | Reorder: Split→Reverse→Merge" },
+  { section: "2.5 Recursion & Backtracking", problems: [
+    { id: "p2-31", name: "Subsets", link: "https://leetcode.com/problems/subsets/", diff: "Medium", pattern: "Include/Exclude" },
+    { id: "p2-32", name: "Permutations", link: "https://leetcode.com/problems/permutations/", diff: "Medium", pattern: "Swap/Visited" },
+    { id: "p2-33", name: "Combination Sum", link: "https://leetcode.com/problems/combination-sum/", diff: "Medium", pattern: "Unlimited picks" },
+    { id: "p2-34", name: "N-Queens", link: "https://leetcode.com/problems/n-queens/", diff: "Hard", pattern: "Col+Diag sets" },
+    { id: "p2-35", name: "Word Search", link: "https://leetcode.com/problems/word-search/", diff: "Medium", pattern: "DFS+visited" },
+    { id: "p2-36", name: "Generate Parentheses", link: "https://leetcode.com/problems/generate-parentheses/", diff: "Medium", pattern: "open<n,close<open" },
+    { id: "p2-37", name: "Palindrome Partitioning", link: "https://leetcode.com/problems/palindrome-partitioning/", diff: "Medium", pattern: "Backtrack+check" },
+    { id: "p2-38", name: "Sudoku Solver", link: "https://leetcode.com/problems/sudoku-solver/", diff: "Hard", pattern: "Constraint sets" },
+  ], insight: "Duplicates: sort first, skip arr[i]==arr[i-1] at same level | Template: make→recurse→undo" },
+],
+phase3: [
+  { section: "3.1 Binary Trees", problems: [
+    { id: "p3-1", name: "Maximum Path Sum", link: "https://leetcode.com/problems/binary-tree-maximum-path-sum/", diff: "Hard", pattern: "DFS global 🔥" },
+    { id: "p3-2", name: "Lowest Common Ancestor", link: "https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/", diff: "Medium", pattern: "DFS return up" },
+    { id: "p3-3", name: "Serialize/Deserialize BT", link: "https://leetcode.com/problems/serialize-and-deserialize-binary-tree/", diff: "Hard", pattern: "Preorder+nulls" },
+    { id: "p3-4", name: "Diameter of Binary Tree", link: "https://leetcode.com/problems/diameter-of-binary-tree/", diff: "Easy", pattern: "DFS path" },
+    { id: "p3-5", name: "Level Order Traversal", link: "https://leetcode.com/problems/binary-tree-level-order-traversal/", diff: "Medium", pattern: "BFS Queue" },
+    { id: "p3-6", name: "Validate BST", link: "https://leetcode.com/problems/validate-binary-search-tree/", diff: "Medium", pattern: "Inorder/Range" },
+    { id: "p3-7", name: "Kth Smallest in BST", link: "https://leetcode.com/problems/kth-smallest-element-in-a-bst/", diff: "Medium", pattern: "Inorder" },
+    { id: "p3-8", name: "Construct from Inorder+Preorder", link: "https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/", diff: "Medium", pattern: "Recursive partition" },
+  ], insight: "Most tree: DFS return info UP | Diameter/Path: combine left+right, update global | LCA: both non-null = current" },
+  { section: "3.2 Heaps", problems: [
+    { id: "p3-9", name: "Find Median from Data Stream", link: "https://leetcode.com/problems/find-median-from-data-stream/", diff: "Hard", pattern: "Two Heaps 🔥" },
+    { id: "p3-10", name: "Task Scheduler", link: "https://leetcode.com/problems/task-scheduler/", diff: "Medium", pattern: "Max Heap+Cool" },
+    { id: "p3-11", name: "Top K Frequent", link: "https://leetcode.com/problems/top-k-frequent-elements/", diff: "Medium", pattern: "Heap/Bucket" },
+    { id: "p3-12", name: "K Closest Points", link: "https://leetcode.com/problems/k-closest-points-to-origin/", diff: "Medium", pattern: "Max Heap K" },
+    { id: "p3-13", name: "Merge K Sorted Lists", link: "https://leetcode.com/problems/merge-k-sorted-lists/", diff: "Hard", pattern: "Min Heap" },
+  ], insight: "Kth largest: min-heap size K | Median: max-heap(lower)+min-heap(upper) | Merge K: (val, list_idx, elem_idx)" },
+  { section: "3.3 Graphs", problems: [
+    { id: "p3-14", name: "Number of Islands", link: "https://leetcode.com/problems/number-of-islands/", diff: "Medium", pattern: "BFS/DFS flood" },
+    { id: "p3-15", name: "Course Schedule", link: "https://leetcode.com/problems/course-schedule/", diff: "Medium", pattern: "Topo Sort" },
+    { id: "p3-16", name: "Rotting Oranges", link: "https://leetcode.com/problems/rotting-oranges/", diff: "Medium", pattern: "Multi-BFS" },
+    { id: "p3-17", name: "Word Ladder", link: "https://leetcode.com/problems/word-ladder/", diff: "Hard", pattern: "BFS levels 🔥" },
+    { id: "p3-18", name: "Dijkstra (Network Delay)", link: "https://leetcode.com/problems/network-delay-time/", diff: "Medium", pattern: "Dijkstra" },
+    { id: "p3-19", name: "Pacific Atlantic Water Flow", link: "https://leetcode.com/problems/pacific-atlantic-water-flow/", diff: "Medium", pattern: "Multi-source BFS" },
+    { id: "p3-20", name: "Critical Connections", link: "https://leetcode.com/problems/critical-connections-in-a-network/", diff: "Hard", pattern: "Tarjan's 🔥" },
+    { id: "p3-21", name: "Cheapest Flights K Stops", link: "https://leetcode.com/problems/cheapest-flights-within-k-stops/", diff: "Medium", pattern: "Bellman-Ford" },
+  ], insight: "BFS: shortest unweighted | Multi-source: add ALL sources first | Dijkstra: min-heap O(ElogV) | Topo: Kahn's indegree" },
+  { section: "3.4 Dynamic Programming", problems: [
+    { id: "p3-22", name: "Coin Change", link: "https://leetcode.com/problems/coin-change/", diff: "Medium", pattern: "Unbounded Knapsack" },
+    { id: "p3-23", name: "Longest Increasing Subsequence", link: "https://leetcode.com/problems/longest-increasing-subsequence/", diff: "Medium", pattern: "DP+BS O(nlogn)" },
+    { id: "p3-24", name: "Longest Common Subsequence", link: "https://leetcode.com/problems/longest-common-subsequence/", diff: "Medium", pattern: "2D DP" },
+    { id: "p3-25", name: "Edit Distance", link: "https://leetcode.com/problems/edit-distance/", diff: "Medium", pattern: "2D DP strings" },
+    { id: "p3-26", name: "0/1 Knapsack", link: "https://www.geeksforgeeks.org/problems/0-1-knapsack-problem0945/1", diff: "Medium", pattern: "Classic 2D DP" },
+    { id: "p3-27", name: "Partition Equal Subset Sum", link: "https://leetcode.com/problems/partition-equal-subset-sum/", diff: "Medium", pattern: "Subset Sum" },
+    { id: "p3-28", name: "Word Break", link: "https://leetcode.com/problems/word-break/", diff: "Medium", pattern: "1D DP" },
+    { id: "p3-29", name: "Burst Balloons", link: "https://leetcode.com/problems/burst-balloons/", diff: "Hard", pattern: "Interval DP 🔥" },
+    { id: "p3-30", name: "House Robber", link: "https://leetcode.com/problems/house-robber/", diff: "Medium", pattern: "1D take/skip" },
+    { id: "p3-31", name: "Stock Buy Sell with Cooldown", link: "https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/", diff: "Medium", pattern: "State Machine" },
+  ], insight: "DP Steps: 1)State 2)Recurrence 3)Base 4)Order | Knapsack: take/skip | LIS O(nlogn): smallest tails | Interval: dp[i][j] split k" },
+  { section: "3.5 Greedy", problems: [
+    { id: "p3-32", name: "Jump Game", link: "https://leetcode.com/problems/jump-game/", diff: "Medium", pattern: "Max reachable" },
+    { id: "p3-33", name: "Jump Game II", link: "https://leetcode.com/problems/jump-game-ii/", diff: "Medium", pattern: "BFS levels" },
+    { id: "p3-34", name: "Gas Station", link: "https://leetcode.com/problems/gas-station/", diff: "Medium", pattern: "Reset tank<0" },
+    { id: "p3-35", name: "Non-overlapping Intervals", link: "https://leetcode.com/problems/non-overlapping-intervals/", diff: "Medium", pattern: "Sort by end" },
+    { id: "p3-36", name: "Candy Distribution", link: "https://leetcode.com/problems/candy/", diff: "Hard", pattern: "Two passes" },
+  ], insight: "Greedy: local optimal → global | Intervals: sort by END for max non-overlap | If greedy fails → DP" },
+],
+phase4: [
+  { section: "4.1 Bit Manipulation", problems: [
+    { id: "p4-1", name: "Single Number", link: "https://leetcode.com/problems/single-number/", diff: "Easy", pattern: "XOR" },
+    { id: "p4-2", name: "Single Number III", link: "https://leetcode.com/problems/single-number-iii/", diff: "Medium", pattern: "XOR+split" },
+    { id: "p4-3", name: "Counting Bits", link: "https://leetcode.com/problems/counting-bits/", diff: "Easy", pattern: "DP bits" },
+    { id: "p4-4", name: "Maximum XOR Two Numbers", link: "https://leetcode.com/problems/maximum-xor-of-two-numbers-in-an-array/", diff: "Medium", pattern: "Bit Trie" },
+    { id: "p4-5", name: "Subsets (Bitmask)", link: "https://leetcode.com/problems/subsets/", diff: "Medium", pattern: "0 to 2^n-1" },
+  ], insight: "XOR: a^a=0, a^0=a | n&(n-1): removes lowest set bit | Get bit i: (n>>i)&1 | Two unique: XOR→split by rightmost bit" },
+  { section: "4.2 Math & Number Theory", problems: [
+    { id: "p4-6", name: "Count Primes (Sieve)", link: "https://leetcode.com/problems/count-primes/", diff: "Medium", pattern: "Sieve" },
+    { id: "p4-7", name: "Pow(x, n)", link: "https://leetcode.com/problems/powx-n/", diff: "Medium", pattern: "Binary Exp" },
+    { id: "p4-8", name: "Catalan (Unique BSTs)", link: "https://leetcode.com/problems/unique-binary-search-trees/", diff: "Medium", pattern: "Catalan" },
+    { id: "p4-9", name: "Trailing Zeroes Factorial", link: "https://leetcode.com/problems/factorial-trailing-zeroes/", diff: "Medium", pattern: "Count 5s" },
+    { id: "p4-10", name: "Multiply Strings", link: "https://leetcode.com/problems/multiply-strings/", diff: "Medium", pattern: "Grade school" },
+  ], insight: "Sieve: O(n log log n) | Binary Exp: a^n O(log n) | Fermat: a^(-1)≡a^(p-2) mod p | Catalan: BSTs, parentheses" },
+  { section: "4.3 Codeforces Tricky 🔥🔥", problems: [
+    { id: "p4-11", name: "Good Subarrays", link: "https://codeforces.com/problemset/problem/1398/C", diff: "Medium", pattern: "Prefix sum(a[i]-1)" },
+    { id: "p4-12", name: "Number of Ways", link: "https://codeforces.com/problemset/problem/466/C", diff: "Hard", pattern: "Prefix+suffix" },
+    { id: "p4-13", name: "Longest Regular Bracket", link: "https://codeforces.com/problemset/problem/5/C", diff: "Hard", pattern: "Stack+DP 🔥" },
+    { id: "p4-14", name: "Books", link: "https://codeforces.com/problemset/problem/279/B", diff: "Medium", pattern: "Two pointers" },
+    { id: "p4-15", name: "Divisibility Problem", link: "https://codeforces.com/problemset/problem/1328/A", diff: "Easy", pattern: "Mod trick" },
+    { id: "p4-16", name: "Make Product Equal One", link: "https://codeforces.com/problemset/problem/1206/B", diff: "Medium", pattern: "Sign counting" },
+    { id: "p4-17", name: "Playlist", link: "https://codeforces.com/problemset/problem/1140/C", diff: "Medium", pattern: "Sort+Greedy" },
+  ], insight: "ALWAYS check: n=0,1,2, negative, overflow | Parity arguments | Read constraints for complexity | Constructive = what must answer satisfy" },
+  { section: "4.4 Advanced DP 🔥", problems: [
+    { id: "p4-18", name: "Longest Increasing Path Matrix", link: "https://leetcode.com/problems/longest-increasing-path-in-a-matrix/", diff: "Hard", pattern: "DFS+Memo" },
+    { id: "p4-19", name: "Super Egg Drop", link: "https://leetcode.com/problems/super-egg-drop/", diff: "Hard", pattern: "DP+BS 🔥🔥" },
+    { id: "p4-20", name: "Russian Doll Envelopes", link: "https://leetcode.com/problems/russian-doll-envelopes/", diff: "Hard", pattern: "Sort+LIS" },
+    { id: "p4-21", name: "Cherry Pickup II", link: "https://leetcode.com/problems/cherry-pickup-ii/", diff: "Hard", pattern: "3D DP" },
+    { id: "p4-22", name: "Min Cost to Cut a Stick", link: "https://leetcode.com/problems/minimum-cost-to-cut-a-stick/", diff: "Hard", pattern: "Interval DP" },
+    { id: "p4-23", name: "Shortest Common Supersequence", link: "https://leetcode.com/problems/shortest-common-supersequence/", diff: "Hard", pattern: "LCS+Reconstruct" },
+  ], insight: "Advanced DP = harder state definition | Interval: dp[i][j] split all k | 3D: two agents moving simultaneously" },
+],
+company: [
+  { section: "Google 🔥", problems: [
+    { id: "c-1", name: "Median of Two Sorted Arrays", link: "https://leetcode.com/problems/median-of-two-sorted-arrays/", diff: "Hard", pattern: "BS ⭐⭐⭐" },
+    { id: "c-2", name: "Split Array Largest Sum", link: "https://leetcode.com/problems/split-array-largest-sum/", diff: "Hard", pattern: "BS Answer ⭐⭐⭐" },
+    { id: "c-3", name: "Word Ladder", link: "https://leetcode.com/problems/word-ladder/", diff: "Hard", pattern: "BFS ⭐⭐⭐" },
+    { id: "c-4", name: "Snapshot Array", link: "https://leetcode.com/problems/snapshot-array/", diff: "Medium", pattern: "BS ⭐⭐⭐" },
+    { id: "c-5", name: "Koko Eating Bananas", link: "https://leetcode.com/problems/koko-eating-bananas/", diff: "Medium", pattern: "BS Answer ⭐⭐⭐" },
+  ], insight: "Google loves: BS on Answer, Greedy with proofs, Graph variations, DP optimizations" },
+  { section: "Amazon 🔥", problems: [
+    { id: "c-6", name: "LRU Cache", link: "https://leetcode.com/problems/lru-cache/", diff: "Medium", pattern: "HashMap+DLL ⭐⭐⭐" },
+    { id: "c-7", name: "Number of Islands", link: "https://leetcode.com/problems/number-of-islands/", diff: "Medium", pattern: "BFS/DFS ⭐⭐⭐" },
+    { id: "c-8", name: "Merge Intervals", link: "https://leetcode.com/problems/merge-intervals/", diff: "Medium", pattern: "Sort ⭐⭐⭐" },
+    { id: "c-9", name: "Top K Frequent", link: "https://leetcode.com/problems/top-k-frequent-elements/", diff: "Medium", pattern: "Heap ⭐⭐⭐" },
+    { id: "c-10", name: "Rotting Oranges", link: "https://leetcode.com/problems/rotting-oranges/", diff: "Medium", pattern: "Multi-BFS ⭐⭐⭐" },
+  ], insight: "Amazon loves: HashMap tricks, Priority Queues, BFS grids, Sliding Window" },
+  { section: "Microsoft", problems: [
+    { id: "c-11", name: "Add Two Numbers", link: "https://leetcode.com/problems/add-two-numbers/", diff: "Medium", pattern: "Linked List ⭐⭐⭐" },
+    { id: "c-12", name: "Group Anagrams", link: "https://leetcode.com/problems/group-anagrams/", diff: "Medium", pattern: "HashMap ⭐⭐⭐" },
+    { id: "c-13", name: "Validate BST", link: "https://leetcode.com/problems/validate-binary-search-tree/", diff: "Medium", pattern: "DFS ⭐⭐⭐" },
+    { id: "c-14", name: "LCA Binary Tree", link: "https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/", diff: "Medium", pattern: "DFS ⭐⭐⭐" },
+  ], insight: "Microsoft loves: Strings, Trees, DP, Matrix problems" },
+  { section: "DE Shaw / Quant", problems: [
+    { id: "c-15", name: "Super Egg Drop", link: "https://leetcode.com/problems/super-egg-drop/", diff: "Hard", pattern: "DP+BS" },
+    { id: "c-16", name: "Skyline Problem", link: "https://leetcode.com/problems/the-skyline-problem/", diff: "Hard", pattern: "Sweep+Heap" },
+    { id: "c-17", name: "Maximum XOR", link: "https://leetcode.com/problems/maximum-xor-of-two-numbers-in-an-array/", diff: "Medium", pattern: "Bit Trie" },
+    { id: "c-18", name: "Regular Expression Matching", link: "https://leetcode.com/problems/regular-expression-matching/", diff: "Hard", pattern: "2D DP" },
+  ], insight: "Quant firms: Math tricks, CP-style observations, edge cases, bit manipulation" },
+]
+};
+
+// ====== STATE MANAGEMENT (localStorage) ======
+function getState() {
+    return JSON.parse(localStorage.getItem('dsa-sheet-state') || '{"completed":{},"favorites":{},"lastDate":""}');
+}
+function saveState(state) {
+    localStorage.setItem('dsa-sheet-state', JSON.stringify(state));
+}
+function updateStreak() {
+    const state = getState();
+    const today = new Date().toDateString();
+    if (state.lastDate !== today) {
+        const yesterday = new Date(Date.now() - 86400000).toDateString();
+        if (state.lastDate === yesterday) {
+            state.streak = (state.streak || 0) + 1;
+        } else if (state.lastDate !== today) {
+            state.streak = 1;
+        }
+        state.lastDate = today;
+        saveState(state);
+    }
+    document.getElementById('streak').textContent = state.streak || 0;
+}
+
+// ====== RENDER FUNCTIONS ======
+function renderProblems(tabId, sections) {
+    const container = document.getElementById(tabId);
+    container.innerHTML = '';
+    const state = getState();
+
+    sections.forEach((sec, si) => {
+        const div = document.createElement('div');
+        div.className = 'section';
+        const completedInSection = sec.problems.filter(p => state.completed[p.id]).length;
+        div.innerHTML = `
+            <div class="section-header" onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'none' ? 'block' : 'none'">
+                <h3>${sec.section}</h3>
+                <span class="badge">${completedInSection}/${sec.problems.length}</span>
+            </div>
+            <div class="section-body">
+                ${sec.problems.map((p, i) => `
+                    <div class="problem-row" data-id="${p.id}" data-name="${p.name.toLowerCase()}" data-pattern="${p.pattern.toLowerCase()}">
+                        <span class="num">${i+1}</span>
+                        <span class="name"><a href="${p.link}" target="_blank">${p.name}</a></span>
+                        <span class="diff diff-${p.diff.toLowerCase()}">${p.diff}</span>
+                        <span class="pattern">${p.pattern}</span>
+                        <button class="check-btn ${state.completed[p.id] ? 'checked' : ''}" onclick="toggleComplete('${p.id}')">✓</button>
+                        <button class="fav-btn ${state.favorites[p.id] ? 'active' : ''}" onclick="toggleFavorite('${p.id}')">⭐</button>
+                    </div>
+                `).join('')}
+                ${sec.insight ? `<div class="insight-box">💡 <strong>Key Insights:</strong> ${sec.insight}</div>` : ''}
+            </div>
+        `;
+        container.appendChild(div);
+    });
+}
+
+function toggleComplete(id) {
+    const state = getState();
+    state.completed[id] = !state.completed[id];
+    saveState(state);
+    updateStats();
+    updateStreak();
+    renderActiveTab();
+}
+function toggleFavorite(id) {
+    const state = getState();
+    state.favorites[id] = !state.favorites[id];
+    saveState(state);
+    updateStats();
+    renderActiveTab();
+}
+
+function updateStats() {
+    const state = getState();
+    const solved = Object.values(state.completed).filter(Boolean).length;
+    const favs = Object.values(state.favorites).filter(Boolean).length;
+    const total = Object.values(problems).flat().reduce((a, s) => a + s.problems.length, 0);
+    document.getElementById('total-solved').textContent = solved;
+    document.getElementById('total-problems').textContent = total;
+    document.getElementById('fav-count').textContent = favs;
+    document.getElementById('progress-fill').style.width = `${(solved/total*100).toFixed(1)}%`;
+}
+
+// ====== TABS ======
+let activeTab = 'phase1';
+function renderActiveTab() {
+    if (problems[activeTab]) renderProblems(activeTab, problems[activeTab]);
+}
+
+document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        activeTab = tab.dataset.tab;
+        document.getElementById(activeTab).classList.add('active');
+        if (problems[activeTab]) renderProblems(activeTab, problems[activeTab]);
+    });
+});
+
+// ====== SEARCH ======
+document.getElementById('search').addEventListener('input', (e) => {
+    const q = e.target.value.toLowerCase();
+    document.querySelectorAll('.problem-row').forEach(row => {
+        const match = row.dataset.name.includes(q) || row.dataset.pattern.includes(q);
+        row.style.display = match ? '' : 'none';
+    });
+});
+
+// ====== FILTERS ======
+document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+        const state = getState();
+        document.querySelectorAll('.problem-row').forEach(row => {
+            const id = row.dataset.id;
+            if (filter === 'all') row.style.display = '';
+            else if (filter === 'completed') row.style.display = state.completed[id] ? '' : 'none';
+            else if (filter === 'pending') row.style.display = !state.completed[id] ? '' : 'none';
+            else if (filter === 'favorite') row.style.display = state.favorites[id] ? '' : 'none';
+        });
+    });
+});
+
+// ====== CHEAT SHEET TAB ======
+document.getElementById('cheatsheet').innerHTML = `
+<div class="cheat-grid">
+    <div class="cheat-card"><h4>Sliding Window</h4><pre>left = 0
+for right in range(n):
+    add arr[right] to window
+    while window_invalid:
+        remove arr[left]
+        left += 1
+    update answer</pre></div>
+    <div class="cheat-card"><h4>Binary Search on Answer</h4><pre>lo, hi = min_possible, max_possible
+while lo < hi:
+    mid = (lo + hi) // 2
+    if feasible(mid):
+        hi = mid
+    else:
+        lo = mid + 1
+return lo</pre></div>
+    <div class="cheat-card"><h4>Monotonic Stack</h4><pre>stack = []
+for i in range(n):
+    while stack and arr[stack[-1]] < arr[i]:
+        result[stack.pop()] = arr[i]
+    stack.append(i)</pre></div>
+    <div class="cheat-card"><h4>DFS on Tree</h4><pre>def dfs(node):
+    if not node: return 0
+    left = dfs(node.left)
+    right = dfs(node.right)
+    global_ans = max(global_ans, left+right+val)
+    return max(left, right) + val</pre></div>
+    <div class="cheat-card"><h4>BFS</h4><pre>queue = deque([start])
+visited = {start}
+while queue:
+    node = queue.popleft()
+    for nei in graph[node]:
+        if nei not in visited:
+            visited.add(nei)
+            queue.append(nei)</pre></div>
+    <div class="cheat-card"><h4>Union-Find</h4><pre>def find(x):
+    if parent[x] != x:
+        parent[x] = find(parent[x])
+    return parent[x]
+def union(x, y):
+    px, py = find(x), find(y)
+    if rank[px] < rank[py]: px,py = py,px
+    parent[py] = px</pre></div>
+    <div class="cheat-card"><h4>Backtracking</h4><pre>def backtrack(state, start):
+    if goal: result.append(state[:])
+    for i in range(start, n):
+        if i > start and a[i]==a[i-1]: continue
+        state.append(a[i])
+        backtrack(state, i+1)
+        state.pop()</pre></div>
+    <div class="cheat-card"><h4>Dijkstra</h4><pre>dist = {start: 0}
+heap = [(0, start)]
+while heap:
+    d, u = heappop(heap)
+    if d > dist.get(u, inf): continue
+    for v, w in graph[u]:
+        if d+w < dist.get(v, inf):
+            dist[v] = d+w
+            heappush(heap, (d+w, v))</pre></div>
+</div>`;
+
+// ====== GUIDE TAB ======
+document.getElementById('guide').innerHTML = `
+<div class="guide-content">
+    <h2>🗓️ Week-by-Week Plan</h2>
+    <table>
+        <tr><th>Week</th><th>Phase</th><th>Focus</th><th>CF Rating</th></tr>
+        <tr><td>1-2</td><td>Phase 1</td><td>Arrays, Strings, Sorting, Binary Search</td><td>800-900</td></tr>
+        <tr><td>2-3</td><td>Phase 2</td><td>Two Pointers, Sliding Window, Stack, LL, Backtracking</td><td>1000-1200</td></tr>
+        <tr><td>3-4</td><td>Phase 3</td><td>Trees, Graphs, DP, Greedy, Heaps</td><td>1200-1400</td></tr>
+        <tr><td>4+</td><td>Phase 4</td><td>CP Tricks, Math, Bit, Advanced DP</td><td>1400-1600</td></tr>
+    </table>
+
+    <h2>⏰ Daily Routine (3 hours)</h2>
+    <table>
+        <tr><th>Time</th><th>Activity</th></tr>
+        <tr><td>1.5 hrs</td><td>4-5 problems from current phase (in section order)</td></tr>
+        <tr><td>1 hr</td><td>2 Codeforces problems (matching rating for your week)</td></tr>
+        <tr><td>30 min</td><td>Revise yesterday's problems — say the approach without looking</td></tr>
+    </table>
+
+    <h2>🧠 How to Solve Each Problem</h2>
+    <div class="tip-box">
+        <strong>The 15-Minute Rule:</strong><br>
+        1. Read → identify pattern from tag (2 min)<br>
+        2. Think for 15 min max<br>
+        3. If stuck → read the 💡 insight → try 10 more min<br>
+        4. Still stuck → look at APPROACH (not code) → code yourself<br>
+        5. After: mark ✓, write 1-line insight, star ⭐ if hard
+    </div>
+
+    <h2>🔁 Spaced Repetition</h2>
+    <table>
+        <tr><th>When</th><th>What</th></tr>
+        <tr><td>Day 0</td><td>Solve + write 1-line insight</td></tr>
+        <tr><td>Day 2</td><td>Revisit ⭐ problems (think approach only)</td></tr>
+        <tr><td>Day 7</td><td>Speed-run week's problems (30 sec each, say approach)</td></tr>
+        <tr><td>Weekend</td><td>Re-solve 3-4 hardest without hints</td></tr>
+    </table>
+
+    <h2>✅ Edge Case Mantra (Before Every Submit)</h2>
+    <div class="tip-box">
+        Empty? Single element? All same? Negative numbers? Overflow?<br>
+        k=0? k=1? k=n? Duplicates? Already sorted? Reverse sorted?
+    </div>
+
+    <h2>📈 When to Move to Next Phase</h2>
+    <ul>
+        <li>80% of current phase solved without hints</li>
+        <li>Can identify pattern for NEW problem in &lt;2 minutes</li>
+        <li>Can explain approach verbally to someone</li>
+    </ul>
+
+    <h2>🏆 Weekend Strategy</h2>
+    <table>
+        <tr><th>Day</th><th>Activity</th></tr>
+        <tr><td>Saturday</td><td>Codeforces Div 2 contest (live or virtual) — solve A+B+C</td></tr>
+        <tr><td>Sunday AM</td><td>Revise all starred ⭐ from the week</td></tr>
+        <tr><td>Sunday PM</td><td>Re-solve 2-3 hardest from scratch</td></tr>
+    </table>
+
+    <h2>🎯 Priority for Your Profile</h2>
+    <div class="tip-box">
+        <strong>HIGH:</strong> BS on Answer, Sliding Window, Graph BFS/DFS, DP (Knapsack/LIS/LCS), Monotonic Stack, Two Pointers<br><br>
+        <strong>MEDIUM:</strong> Heaps, Backtracking, Greedy, Trees, Union-Find<br><br>
+        <strong>DAILY:</strong> 2 Codeforces + Edge case practice + Speed coding
+    </div>
+
+    <p style="margin-top:24px; text-align:center; color:var(--accent)"><strong>Consistency > Perfection. 3 hrs/day × 4 weeks = crack any interview. 🚀</strong></p>
+</div>`;
+
+// ====== INIT ======
+renderProblems('phase1', problems.phase1);
+updateStats();
+updateStreak();
+</script>
+</body>
+</html>
