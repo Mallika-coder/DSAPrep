@@ -343,7 +343,7 @@
 
         /* Responsive */
         @media (max-width: 768px) {
-            .problem-row { grid-template-columns: 30px 1fr 70px 50px 40px; font-size: 0.85rem; }
+            .problem-row { grid-template-columns: 30px 1fr 70px 40px 35px 35px 35px; font-size: 0.85rem; }
             .problem-row .pattern { display: none; }
             .header h1 { font-size: 1.8rem; }
             .stats-bar { grid-template-columns: repeat(2, 1fr); }
@@ -1007,17 +1007,20 @@ function renderProblems(tabId, sections) {
                 <span class="badge">${completedInSection}/${sec.problems.length}</span>
             </div>
             <div class="section-body">
-                ${sec.problems.map((p, i) => `
+                ${sec.problems.map((p, i) => {
+                    const hasSol = !!solutions[p.id];
+                    const solClick = hasSol ? 'showSolution(&quot;' + p.id + '&quot;)' : '';
+                    return `
                     <div class="problem-row" data-id="${p.id}" data-name="${p.name.toLowerCase()}" data-pattern="${p.pattern.toLowerCase()}">
                         <span class="num">${i+1}</span>
                         <span class="name"><a href="${p.link}" target="_blank">${p.name}</a></span>
                         <span class="diff diff-${p.diff.toLowerCase()}">${p.diff}</span>
                         <span class="pattern">${p.pattern}</span>
-                        <button class="sol-btn ${solutions[p.id] ? '' : 'no-sol'}" onclick="${solutions[p.id] ? `showSolution('${p.id}')` : ''}">📖</button>
+                        <button class="sol-btn ${hasSol ? '' : 'no-sol'}" onclick="${solClick}">📖</button>
                         <button class="check-btn ${state.completed[p.id] ? 'checked' : ''}" onclick="toggleComplete('${p.id}')">✓</button>
                         <button class="fav-btn ${state.favorites[p.id] ? 'active' : ''}" onclick="toggleFavorite('${p.id}')">⭐</button>
-                    </div>
-                `).join('')}
+                    </div>`;
+                }).join('')}
                 ${sec.insight ? `<div class="insight-box">💡 <strong>Key Insights:</strong> ${sec.insight}</div>` : ''}
             </div>
         `;
