@@ -420,12 +420,11 @@
 
 <script src="solutions.js"></script>
 <script>
-// solutions object is loaded from solutions.js
-if (typeof solutions === 'undefined') var solutions = {};
+// solutions object is loaded from solutions.js above
 // Modal functions
 function showSolution(id) {
+    if (!solutions || !solutions[id]) return;
     const sol = solutions[id];
-    if (!sol) return;
     document.getElementById('modal-content').innerHTML = `
         <h2>${sol.title}</h2>
         <p class="meta">${sol.meta}</p>
@@ -710,14 +709,13 @@ function renderProblems(tabId, sections) {
             <div class="section-body">
                 ${sec.problems.map((p, i) => {
                     const hasSol = !!solutions[p.id];
-                    const solClick = hasSol ? 'showSolution(&quot;' + p.id + '&quot;)' : '';
                     return `
                     <div class="problem-row" data-id="${p.id}" data-name="${p.name.toLowerCase()}" data-pattern="${p.pattern.toLowerCase()}">
                         <span class="num">${i+1}</span>
                         <span class="name"><a href="${p.link}" target="_blank">${p.name}</a></span>
                         <span class="diff diff-${p.diff.toLowerCase()}">${p.diff}</span>
                         <span class="pattern">${p.pattern}</span>
-                        <button class="sol-btn ${hasSol ? '' : 'no-sol'}" onclick="${solClick}">📖</button>
+                        <button class="sol-btn ${hasSol ? '' : 'no-sol'}" ${hasSol ? `onclick="showSolution('${p.id}')"` : ''}>📖</button>
                         <button class="check-btn ${state.completed[p.id] ? 'checked' : ''}" onclick="toggleComplete('${p.id}')">✓</button>
                         <button class="fav-btn ${state.favorites[p.id] ? 'active' : ''}" onclick="toggleFavorite('${p.id}')">⭐</button>
                     </div>`;
